@@ -10,6 +10,7 @@ namespace SlutprojektP2
     {
         Map map;
         Player player;
+        public static bool isPaused = false;
         List<Character> characters = new List<Character>();
         bool gameOver = false;
         private char[,] fullMapArray;
@@ -36,13 +37,26 @@ namespace SlutprojektP2
             {
                 DrawCharacters();
                 player.PlayerController(MapAsArray);
+                if (isPaused)
+                {
+                    Pause();
+                }
+                else if (!isPaused)
+                {
+                    Resume();
+                }
             }
         }
 
         void Resume()
         {
-            DrawMap();
-            DrawCharacters();
+            //DrawMap();
+            //DrawCharacters();
+        }
+
+        void Pause()
+        {
+            
         }
 
         void DrawMap()
@@ -159,63 +173,19 @@ namespace SlutprojektP2
                     Console.BackgroundColor = ConsoleColor.Black;
                     break;
                 case '#':
-                    if (x == 0 && y == 0 && state == "init")
-                    {
-                        //Console.SetCursorPosition(0, 0);
-                    }
-                    if (x != 0 || y != 0 && state == "init")
-                    {
-                        Console.Write(" ");
-                    }
-                    if (state == "update")
-                    {
-
-                    }
+                    CaseIf(x, y, state);
                     Console.BackgroundColor = ConsoleColor.DarkGray;
                     break;
                 case '¤':
-                    if (x == 0 && y == 0 && state == "init")
-                    {
-                        //Console.SetCursorPosition(0, 0);
-                    }
-                    if (x != 0 || y != 0 && state == "init")
-                    {
-                        Console.Write(" ");
-                    }
-                    if (state == "update")
-                    {
-
-                    }
+                    CaseIf(x, y, state);
                     Console.BackgroundColor = ConsoleColor.Yellow;
                     break;
                 case '&':
-                    if (x == 0 && y == 0 && state == "init")
-                    {
-                        //Console.SetCursorPosition(0, 0);
-                    }
-                    if (x != 0 || y != 0 && state == "init")
-                    {
-                        Console.Write(" ");
-                    }
-                    if (state == "update")
-                    {
-
-                    }
+                    CaseIf(x, y, state);
                     Console.BackgroundColor = ConsoleColor.Green;
                     break;
                 case '+':
-                    if (x == 0 && y == 0 && state == "init")
-                    {
-                        //Console.SetCursorPosition(0, 0);
-                    }
-                    if (x != 0 || y != 0 && state == "init")
-                    {
-                        Console.Write(" ");
-                    }
-                    if (state == "update")
-                    {
-
-                    }
+                    CaseIf(x, y, state);
                     Console.BackgroundColor = ConsoleColor.Gray;
                     break;
             }

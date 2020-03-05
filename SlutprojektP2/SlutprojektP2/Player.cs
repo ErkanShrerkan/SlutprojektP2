@@ -44,6 +44,18 @@ namespace SlutprojektP2
             {
                 Environment.Exit(0);
             }
+            if (key.Key == ConsoleKey.Tab)
+            {
+                if (Game.isPaused)
+                {
+                    Game.isPaused = false;
+                }
+                else if (!Game.isPaused)
+                {
+                    Game.isPaused = true;
+                    Console.Clear();
+                }
+            }
         }
 
         void Walk(int direction, int axis, char[,] tiles)
