@@ -9,8 +9,10 @@ namespace SlutprojektP2
     class Game
     {
         Map map;
-        Player player;
+        Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
+        public static bool isResumed = true;
+        Queue<Message> messages = new Queue<Message>();
         List<Character> characters = new List<Character>();
         bool gameOver = false;
         private char[,] fullMapArray;
@@ -27,7 +29,7 @@ namespace SlutprojektP2
             Console.CursorVisible = false;
             DrawMap();
             DrawDisplay();
-            player = new Player() { Pos = new int[2] { 8, 2 } };
+            player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
             characters.Add(player);
         }
 
@@ -35,39 +37,56 @@ namespace SlutprojektP2
         {
             while (!gameOver)
             {
-                DrawCharacters();
-                player.PlayerController(MapAsArray);
                 if (isPaused)
                 {
-                    Pause();
+                    if (isResumed)
+                    {
+                        Pause();
+                        DrawPauseMenu();
+                    }
                 }
                 else if (!isPaused)
                 {
-                    Resume();
+                    if (!isResumed)
+                    {
+                        Resume();
+                    }
+                    DrawCharacters();
                 }
+                player.PlayerController(MapAsArray);
             }
         }
 
         void Resume()
         {
-            //DrawMap();
-            //DrawCharacters();
+            Console.Clear();
+            DrawMap();
+            DrawCharacters();
+            isResumed = true;
+            isPaused = false;
         }
 
         void Pause()
         {
-            
+            Console.Clear();
+            isPaused = true;
+            isResumed = false;
+        }
+
+        void DrawPauseMenu()
+        {
+            Console.WriteLine(map.level);
         }
 
         void DrawMap()
         {
-            Console.SetCursorPosition(0,0);
-            for (int y = 0; y < 32; y++)
+            Console.SetCursorPosition(0, 0);
+            for (int y = 0; y < 32; y++) // kollar varje koordinat i kartan
             {
                 for (int x = 0; x < 128; x++)
                 {
                     //Console.SetCursorPosition(x, y);
-                    ColorMap(MapAsArray, x, y, "init");
+                    ColorMap(MapAsArray, x, y, "init"); // färjlägger tilen enligt dess markör
                 }
             }
             Console.ResetColor();
@@ -93,12 +112,12 @@ namespace SlutprojektP2
 
                 //ColorMap(tiles, LastPos[0], LastPos[1], "update");
 
-                if (characters[i].Name == "Player")
+                if (characters[i].Name == "Player") // spelarens karaktär är röd
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.Write(" ");
                 }
-                else
+                else // alla andra karaktärer är gula (finns inga ännu)
                 {
                     Console.BackgroundColor = ConsoleColor.Yellow;
                     Console.Write(" ");

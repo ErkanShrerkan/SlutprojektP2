@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Enemy
+    class Message
     {
 
     }

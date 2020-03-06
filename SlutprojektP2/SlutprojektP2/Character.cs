@@ -18,6 +18,7 @@ namespace SlutprojektP2
         protected bool left;
         protected bool right;
         protected bool[] directions;
+        protected char[] collidableTiles;
         protected int[] position = new int[2];
 
         public int[] Pos  // property

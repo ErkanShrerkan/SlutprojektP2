@@ -8,8 +8,6 @@ namespace SlutprojektP2
 {
     class Player : Character
     {
-        char[] collidableTiles;
-
         public Player()
         {
             collidableTiles = new char[] { '#', '¤', '&' };
@@ -22,24 +20,32 @@ namespace SlutprojektP2
         {
             var key = Console.ReadKey(true);
 
-            directions = CheckValidDirections(tiles);
+            if (Game.isPaused)
+            {
 
-            if (key.Key == ConsoleKey.RightArrow && directions[3]) // höger
-            {
-                Walk(1, 0, tiles);
             }
-            if (key.Key == ConsoleKey.LeftArrow && directions[2]) // vänster
+            else
             {
-                Walk(-1, 0, tiles);
+                directions = CheckValidDirections(tiles);
+
+                if (key.Key == ConsoleKey.RightArrow && directions[3]) // höger
+                {
+                    Walk(1, 0, tiles);
+                }
+                if (key.Key == ConsoleKey.LeftArrow && directions[2]) // vänster
+                {
+                    Walk(-1, 0, tiles);
+                }
+                if (key.Key == ConsoleKey.UpArrow && directions[0]) // upp
+                {
+                    Walk(-1, 1, tiles);
+                }
+                if (key.Key == ConsoleKey.DownArrow && directions[1]) // ner
+                {
+                    Walk(1, 1, tiles);
+                }
             }
-            if (key.Key == ConsoleKey.UpArrow && directions[0]) // upp
-            {
-                Walk(-1, 1, tiles);
-            }
-            if (key.Key == ConsoleKey.DownArrow && directions[1]) // ner
-            {
-                Walk(1, 1, tiles);
-            }
+            
             if (key.Key == ConsoleKey.Escape)
             {
                 Environment.Exit(0);
@@ -53,7 +59,6 @@ namespace SlutprojektP2
                 else if (!Game.isPaused)
                 {
                     Game.isPaused = true;
-                    Console.Clear();
                 }
             }
         }
