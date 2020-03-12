@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Enemy : Character
+    class Weapon : Item
     {
-        List<Enemy> enemies;
-
-        public Enemy()
-        {
-
-        }
+        protected int damage;
     }
 }

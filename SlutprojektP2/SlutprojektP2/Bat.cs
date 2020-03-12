@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Enemy : Character
+    class Bat
     {
-        List<Enemy> enemies;
-
-        public Enemy()
-        {
-
-        }
     }
 }

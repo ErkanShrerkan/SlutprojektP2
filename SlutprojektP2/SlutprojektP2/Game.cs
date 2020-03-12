@@ -75,7 +75,7 @@ namespace SlutprojektP2
 
         void DrawPauseMenu()
         {
-            Console.WriteLine(map.level);
+            
         }
 
         void DrawMap()

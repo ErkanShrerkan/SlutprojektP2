@@ -13,6 +13,10 @@ namespace SlutprojektP2
         protected string sprite;
         protected string name;
         protected int hp;
+        protected int armor;
+        protected int damage;
+        protected int dodgeChance;
+        protected Weapon currentWeapon;
         protected bool up;
         protected bool down;
         protected bool left;
@@ -25,6 +29,26 @@ namespace SlutprojektP2
         {
             get { return position; }   // get method
             set { position = value; }   // set method
+        }
+
+        protected void Attack(Character opponent)
+        {
+            if (Game.gen.Next(101) >= (opponent.dodgeChance))
+            {
+                //hit
+                if ((currentWeapon.Damage - opponent.armor / 2) <= 0)
+                {
+                    opponent.hp -= 1;
+                }
+                else
+                {
+                    opponent.hp -= (currentWeapon.Damage - opponent.armor);
+                }
+            }
+            else
+            {
+                // miss
+            }
         }
 
         public string Name
