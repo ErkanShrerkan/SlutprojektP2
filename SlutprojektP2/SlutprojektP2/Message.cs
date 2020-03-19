@@ -8,6 +8,9 @@ namespace SlutprojektP2
 {
     class Message
     {
+        public Message(string content)
+        {
 
+        }
     }
 }

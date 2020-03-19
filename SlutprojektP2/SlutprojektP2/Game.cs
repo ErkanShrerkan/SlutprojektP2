@@ -8,12 +8,14 @@ namespace SlutprojektP2
 {
     class Game
     {
+        int displayStartPosY;
+        int test = 100;
         public static Random gen;
         Map map;
         Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
         public static bool isResumed = true;
-        Queue<Message> messages = new Queue<Message>();
+        Queue<string> messages = new Queue<string>();
         List<Character> characters = new List<Character>();
         bool gameOver = false;
         private char[,] fullMapArray;
@@ -53,9 +55,19 @@ namespace SlutprojektP2
                     {
                         Resume();
                     }
+                    Encounter();
                     DrawCharacters();
+                    DrawDisplay();
                 }
                 player.PlayerController(MapAsArray);
+            }
+        }
+
+        void Encounter()
+        {
+            if (gen.Next(100) < 10)
+            {
+                messages.Enqueue("You encountered an enemy!" + test--);
             }
         }
 
@@ -96,8 +108,14 @@ namespace SlutprojektP2
 
         void DrawDisplay()
         {
-            Console.SetCursorPosition(6, 27);
-            Console.WriteLine("Welcome to the Game!");
+            displayStartPosY = 28;
+
+            for (int i = 0; i < messages.Count; i++)
+            {
+                displayStartPosY -= 1;
+                Console.SetCursorPosition(6, displayStartPosY);
+                Console.WriteLine("{0}", messages.Dequeue());
+            }
         }
 
         void DrawCharacters()
