@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Goblin
+    class Goblin : Enemy
     {
+
     }
 }

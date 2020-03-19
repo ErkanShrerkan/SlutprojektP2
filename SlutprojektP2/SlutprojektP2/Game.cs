@@ -8,6 +8,7 @@ namespace SlutprojektP2
 {
     class Game
     {
+        public static Random gen;
         Map map;
         Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
@@ -19,6 +20,7 @@ namespace SlutprojektP2
 
         public Game()
         {
+            gen = new Random();
             Start();
             Update();
         }
