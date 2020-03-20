@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Character
+    abstract class Character
     {
         protected bool collision;
         protected int layer;

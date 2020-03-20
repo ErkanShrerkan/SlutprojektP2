@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Archer
+    class Archer : Enemy
     {
+        public Archer()
+        {
+            name = "Archer";
+        }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Reflection;
 
 namespace SlutprojektP2
 {
     class Game
     {
         int displayStartPosY;
-        int test = 100;
         public static Random gen;
         Map map;
         Player player; // inte Character player; för att bara player behöver en controller
@@ -17,6 +18,7 @@ namespace SlutprojektP2
         public static bool isResumed = true;
         Queue<string> messages = new Queue<string>();
         List<Character> characters = new List<Character>();
+        List<Enemy> enemies = new List<Enemy>() { new Archer(), new Warrior() };
         bool gameOver = false;
         private char[,] fullMapArray;
 
@@ -43,7 +45,7 @@ namespace SlutprojektP2
             {
                 if (isPaused)
                 {
-                    if (isResumed)
+                    if (isResumed)   
                     {
                         Pause();
                         DrawPauseMenu();
@@ -55,9 +57,11 @@ namespace SlutprojektP2
                     {
                         Resume();
                     }
+                    // spelet händer här
                     Encounter();
                     DrawCharacters();
                     DrawDisplay();
+                    //
                 }
                 player.PlayerController(MapAsArray);
             }
@@ -65,9 +69,12 @@ namespace SlutprojektP2
 
         void Encounter()
         {
-            if (gen.Next(100) < 10)
+            if (gen.Next(100) < 7)
             {
-                messages.Enqueue("You encountered an enemy!" + test--);
+                messages.Enqueue("You encountered an enemy!      ");
+                DrawDisplay();
+                Thread.Sleep(2000);
+                Battle newBattle = new Battle(player, enemies[gen.Next(2)]);
             }
         }
 
@@ -89,7 +96,7 @@ namespace SlutprojektP2
 
         void DrawPauseMenu()
         {
-            
+            // visa stats och liknande
         }
 
         void DrawMap()
@@ -108,13 +115,18 @@ namespace SlutprojektP2
 
         void DrawDisplay()
         {
-            displayStartPosY = 28;
+            displayStartPosY = 28 - messages.Count;
 
-            for (int i = 0; i < messages.Count; i++)
+            if (messages.Count > 13)
             {
-                displayStartPosY -= 1;
+                messages.Dequeue();
+            }
+
+            foreach (var message in messages)
+            {
+                displayStartPosY++;
                 Console.SetCursorPosition(6, displayStartPosY);
-                Console.WriteLine("{0}", messages.Dequeue());
+                Console.WriteLine(message);
             }
         }
 

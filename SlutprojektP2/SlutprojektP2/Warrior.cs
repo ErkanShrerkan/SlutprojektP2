@@ -8,6 +8,9 @@ namespace SlutprojektP2
 {
     class Warrior : Enemy
     {
-
+        public Warrior()
+        {
+            name = "Warrior";
+        }
     }
 }
