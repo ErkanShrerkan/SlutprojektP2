@@ -10,6 +10,7 @@ namespace SlutprojektP2
     {
         public Archer()
         {
+            hp = 5;
             name = "Archer";
         }
     }

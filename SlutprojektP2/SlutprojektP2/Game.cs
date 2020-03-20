@@ -16,9 +16,9 @@ namespace SlutprojektP2
         Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
         public static bool isResumed = true;
-        Queue<string> messages = new Queue<string>();
+        public static Queue<string> messages = new Queue<string>();
         List<Character> characters = new List<Character>();
-        List<Enemy> enemies = new List<Enemy>() { new Archer(), new Warrior() };
+        static List<Enemy> enemies;
         bool gameOver = false;
         private char[,] fullMapArray;
 
@@ -63,7 +63,13 @@ namespace SlutprojektP2
                     DrawDisplay();
                     //
                 }
+                enemies = new List<Enemy>() { new Archer(), new Warrior() };
                 player.PlayerController(MapAsArray);
+
+                if (player.HP <= 0)
+                {
+                    gameOver = true;
+                }
             }
         }
 
@@ -75,6 +81,7 @@ namespace SlutprojektP2
                 DrawDisplay();
                 Thread.Sleep(2000);
                 Battle newBattle = new Battle(player, enemies[gen.Next(2)]);
+                Resume();
             }
         }
 

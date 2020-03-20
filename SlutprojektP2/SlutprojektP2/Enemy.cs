@@ -8,10 +8,10 @@ namespace SlutprojektP2
 {
     class Enemy : Character
     {
-        public Enemy()
-        {
-            //GetEnemyType();
-        }
+        //public Enemy()
+        //{
+        //    Enemy enemy = GetEnemyType();
+        //}
 
         //private Enemy GetEnemyType()
         //{

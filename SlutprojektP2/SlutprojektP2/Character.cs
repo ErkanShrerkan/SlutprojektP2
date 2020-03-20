@@ -31,6 +31,12 @@ namespace SlutprojektP2
             set { position = value; }   // set method
         }
 
+        public int HP  // property
+        {
+            get { return hp; }   // get method
+            set { hp = value; }   // set method
+        }
+
         protected void Attack(Character opponent)
         {
             if (Game.gen.Next(101) >= (opponent.dodgeChance))

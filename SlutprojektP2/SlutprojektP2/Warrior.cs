@@ -10,6 +10,7 @@ namespace SlutprojektP2
     {
         public Warrior()
         {
+            hp = 10;
             name = "Warrior";
         }
     }
