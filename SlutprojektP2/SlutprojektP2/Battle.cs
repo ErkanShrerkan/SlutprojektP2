@@ -18,7 +18,8 @@ namespace SlutprojektP2
                 Console.WriteLine("welcome to battle yes, {0} and {1}", player.Name, enemy.Name);
                 Console.WriteLine("\n{0} hp: {1}\n{2} hp: {3}", player.Name, player.HP, enemy.Name, enemy.HP);
                 Console.ReadLine();
-                enemy.HP -= 3;
+
+                // player turn
 
                 if (enemy.HP <= 0 || player.HP <= 0)
                 {
