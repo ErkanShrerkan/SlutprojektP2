@@ -8,10 +8,13 @@ namespace SlutprojektP2
 {
     class Archer : Enemy
     {
-        public Archer()
+        public Archer(Player player)
         {
-            hp = 5;
+            maxHp = 5 + (2 * player.Level);
+            hp = maxHp;
             name = "Archer";
+            DodgeChance = 30;
+            Armor = 1;
         }
     }
 }

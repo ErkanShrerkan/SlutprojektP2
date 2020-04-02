@@ -8,10 +8,13 @@ namespace SlutprojektP2
 {
     class Warrior : Enemy
     {
-        public Warrior()
+        public Warrior(Player player)
         {
-            hp = 10;
+            maxHp = 6 + (4 * player.Level);
+            hp = maxHp;
             name = "Warrior";
+            DodgeChance = 15;
+            Armor = 3;
         }
     }
 }

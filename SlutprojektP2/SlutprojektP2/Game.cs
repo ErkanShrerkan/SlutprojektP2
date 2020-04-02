@@ -11,7 +11,7 @@ namespace SlutprojektP2
     class Game
     {
         int displayStartPosY;
-        public static Random gen;
+        public static Random gen; // en random generator för hela spelet
         Map map;
         Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
@@ -19,7 +19,7 @@ namespace SlutprojektP2
         public static Queue<string> messages = new Queue<string>();
         List<Character> characters = new List<Character>();
         static List<Enemy> enemies;
-        bool gameOver = false;
+        public bool gameOver = false;
         private char[,] fullMapArray;
 
         public Game()
@@ -29,13 +29,14 @@ namespace SlutprojektP2
             Update();
         }
 
-        void Start()
+        void Start() // initianerar spelet och ställer in startvärden
         {
             map = new Map();
+            player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
+            Weapon.Sword(player);
             Console.CursorVisible = false;
             DrawMap();
             DrawDisplay();
-            player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
             characters.Add(player);
         }
 
@@ -43,6 +44,7 @@ namespace SlutprojektP2
         {
             while (!gameOver)
             {
+                enemies = new List<Enemy>() { new Archer(player), new Warrior(player) };
                 if (isPaused)
                 {
                     if (isResumed)   
@@ -63,7 +65,7 @@ namespace SlutprojektP2
                     DrawDisplay();
                     //
                 }
-                enemies = new List<Enemy>() { new Archer(), new Warrior() };
+                
                 player.PlayerController(MapAsArray);
 
                 if (player.HP <= 0)
@@ -114,13 +116,13 @@ namespace SlutprojektP2
                 for (int x = 0; x < 128; x++)
                 {
                     //Console.SetCursorPosition(x, y);
-                    ColorMap(MapAsArray, x, y, "init"); // färjlägger tilen enligt dess markör
+                    ColorMap(MapAsArray, x, y, "init"); // färglägger tilen enligt dess markör
                 }
             }
             Console.ResetColor();
         }
 
-        void DrawDisplay()
+        void DrawDisplay() // skriver ut i meddelanderutan
         {
             displayStartPosY = 28 - messages.Count;
 
@@ -137,19 +139,14 @@ namespace SlutprojektP2
             }
         }
 
-        void DrawCharacters()
+        void DrawCharacters() // Ritar ut alla karaktärer, just nu finns bara en karaktär, spelaren
         {
             for (int i = 0; i < characters.Count; i++)
             {
-                //Console.WriteLine(roundedPosX + " "+ roundedPosY+ "                          ");
-                //Console.ReadLine();
-
                 characters[i].Pos[0] = CheckValidPosition(characters[i].Pos[0], "x");
                 characters[i].Pos[1] = CheckValidPosition(characters[i].Pos[1], "y");
 
                 Console.SetCursorPosition(characters[i].Pos[0], characters[i].Pos[1]);
-
-                //ColorMap(tiles, LastPos[0], LastPos[1], "update");
 
                 if (characters[i].Name == "Player") // spelarens karaktär är röd
                 {
@@ -162,14 +159,11 @@ namespace SlutprojektP2
                     Console.Write(" ");
                 }
 
-                //Console.SetCursorPosition(0, 15);
-                //Console.WriteLine("x = {0}; y = {1}               ", player.Pos[0], player.Pos[1]);
-
                 Console.ResetColor();
             }
         }
 
-        int CheckValidPosition(int i, string axis)
+        int CheckValidPosition(int i, string axis) // kollar om spelaren står på en giltig ruta. Är onödig eftersom att banan hindrar spelaren att nå dessa rutor
         {
             if (i < 0)
             {
@@ -197,7 +191,7 @@ namespace SlutprojektP2
             else return 0;
         }
 
-        char[,] MapAsArray
+        char[,] MapAsArray // lägger kartans symboler i en tvådimensionell array
         {
             get
             {
@@ -224,7 +218,7 @@ namespace SlutprojektP2
                 Console.SetCursorPosition(x, y);
             }
 
-            switch (tiles[x, y])
+            switch (tiles[x, y]) // beroende på vilken symbol som ligger i arrayen målas en färg ut
             {
                 case '.':
                     CaseIf(x, y, state);
@@ -249,19 +243,15 @@ namespace SlutprojektP2
             }
         }
 
-        static void CaseIf(int x, int y, string state)
+        static void CaseIf(int x, int y, string state) // denna används för att skriva ut ett mellanslag på alla rutor utom den första 
         {
             if (x == 0 && y == 0 && state == "init")
             {
-                //Console.SetCursorPosition(0, 0);
+                
             }
             if (x != 0 || y != 0 && state == "init")
             {
                 Console.Write(" ");
-            }
-            if (state == "update")
-            {
-
             }
         }
     }

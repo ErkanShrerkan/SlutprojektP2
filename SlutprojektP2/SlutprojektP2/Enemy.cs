@@ -8,20 +8,6 @@ namespace SlutprojektP2
 {
     class Enemy : Character
     {
-        //public Enemy()
-        //{
-        //    Enemy enemy = GetEnemyType();
-        //}
-
-        //private Enemy GetEnemyType()
-        //{
-        //    switch (Game.gen.Next(2))
-        //    {
-        //        case 0:
-        //            return new Archer();
-        //        case 1:
-        //            return new Warrior();
-        //    }
-        //}
+        
     }
 }

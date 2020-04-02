@@ -12,11 +12,13 @@ namespace SlutprojektP2
         protected int layer;
         protected string sprite;
         protected string name;
+        protected int maxHp;
         protected int hp;
         protected int armor;
         protected int damage;
         protected int dodgeChance;
         protected Weapon currentWeapon;
+        protected int level;
         protected bool up;
         protected bool down;
         protected bool left;
@@ -37,7 +39,42 @@ namespace SlutprojektP2
             set { hp = value; }   // set method
         }
 
-        protected void Attack(Character opponent)
+        public int Level
+        {
+            get {return level; }
+            set {level = value; }
+        }
+
+        public int MaxHP  // property
+        {
+            get { return maxHp; } // get method
+        }
+
+        public Weapon CurrentWeapon
+        {
+            get { return currentWeapon; }
+            set { currentWeapon = value; }
+        }
+
+        public int DodgeChance
+        {
+            get { return dodgeChance; }
+            set { dodgeChance = value; }
+        }
+
+        public int Armor
+        {
+            get { return armor; }
+            set { armor = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }   // get method
+            set { name = value; }   // set method
+        }
+
+        public void Attack(Character attacker, Character opponent)
         {
             if (Game.gen.Next(101) >= (opponent.dodgeChance))
             {
@@ -45,22 +82,19 @@ namespace SlutprojektP2
                 if ((currentWeapon.Damage - opponent.armor / 2) <= 0)
                 {
                     opponent.hp -= 1;
+                    Console.WriteLine("{0} was hit for 1 damage!\n", opponent.Name);
                 }
                 else
                 {
-                    opponent.hp -= (currentWeapon.Damage - opponent.armor);
+                    opponent.hp -= (currentWeapon.Damage - opponent.armor / 2);
+                    Console.WriteLine("{0} was hit for {1} damage!\n", opponent.Name, (currentWeapon.Damage - opponent.armor));
                 }
             }
             else
             {
                 // miss
+                Console.WriteLine("{0} missed!\n", attacker.Name);
             }
-        }
-
-        public string Name
-        {
-            get { return name; }   // get method
-            set { name = value; }   // set method
         }
     }
 }
