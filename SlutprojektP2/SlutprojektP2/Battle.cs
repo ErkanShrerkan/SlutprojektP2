@@ -57,8 +57,16 @@ namespace SlutprojektP2
                     {
                         case var expression when player.HP > 0:
                             Game.messages.Enqueue(string.Format("You beat the {0}!", enemy.Name)); // player vann
-                            player.xp += enemy.MaxHP;
-                            player.HP = player.MaxHP;
+                            player.CurrentXp += enemy.MaxHP * 2;
+
+                            switch (player.CurrentXp)
+                            {
+                                case var expression2 when player.CurrentXp >= player.XpToLevelUp: // playerns xp är nog för att
+                                    player.LevelUp(player); // player levlar upp
+                                    break;
+                                case var expression2 when player.CurrentXp < player.XpToLevelUp:
+                                    break;
+                            }
                             break;
                         case var expression when player.HP < 0:
                             Game.messages.Enqueue(string.Format("You were killed by the {0}", enemy.Name)); // player dog

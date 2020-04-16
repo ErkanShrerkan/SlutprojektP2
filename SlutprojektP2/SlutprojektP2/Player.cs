@@ -8,14 +8,16 @@ namespace SlutprojektP2
 {
     class Player : Character
     {
-        public int xp = 0;
         public Player()
         {
             collidableTiles = new char[] { '#', '¤', '&' };
             directions = new bool[] { up = true, down = true, left = true, right = true };
             name = "Player";
             Level = 1;
-            hp = 10 + (3 * Level);
+            xpToLevelUp = 10 + (5 * Level);
+            currentXp = 0;
+            MaxHP = 10 + (3 * Level);
+            hp = MaxHP;
             DodgeChance = 20;
             Armor = 2;
         }

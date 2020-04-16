@@ -14,6 +14,8 @@ namespace SlutprojektP2
         protected string name;
         protected int maxHp;
         protected int hp;
+        protected int xpToLevelUp;
+        protected int currentXp;
         protected int armor;
         protected int damage;
         protected int dodgeChance;
@@ -33,6 +35,18 @@ namespace SlutprojektP2
             set { position = value; }   // set method
         }
 
+        public int XpToLevelUp  // property
+        {
+            get { return xpToLevelUp; }   // get method
+            set { xpToLevelUp = value; }   // set method
+        }
+
+        public int CurrentXp  // property
+        {
+            get { return currentXp; }   // get method
+            set { currentXp = value; }   // set method
+        }
+
         public int HP  // property
         {
             get { return hp; }   // get method
@@ -48,6 +62,7 @@ namespace SlutprojektP2
         public int MaxHP  // property
         {
             get { return maxHp; } // get method
+            set { maxHp = value; }
         }
 
         public Weapon CurrentWeapon
@@ -72,6 +87,17 @@ namespace SlutprojektP2
         {
             get { return name; }   // get method
             set { name = value; }   // set method
+        }
+
+        // just nu använder bara player denna metod för att levla upp
+        public void LevelUp(Character c) // skulle kunna göras virtual för att kunna ändras för olika sorters karaktärer
+        {
+            c.Level++;
+            c.currentXp = 0;
+            c.XpToLevelUp = 10 + (5 * c.Level);
+            c.MaxHP = 10 + (3 * c.Level);
+            c.HP = c.MaxHP;
+            Game.messages.Enqueue("Level Up!");
         }
 
         public void Attack(Character attacker, Character opponent)
