@@ -13,14 +13,12 @@ namespace SlutprojektP2
         int displayStartPosY;
         public static Random gen; // en random generator för hela spelet
         Map map;
-        bool oddOrEven = false; // true = jämt antal game loops, inverteras första (0e) loopen och blir därför true på en jämn loop
         Player player; // inte Character player; för att bara player behöver en controller
         public static bool isPaused = false;
         public static bool isResumed = true;
         public static Queue<string> messages = new Queue<string>();
         Queue<int[]> playerPositions = new Queue<int[]>();
         List<Character> characters = new List<Character>();
-        int[][] comparePositions = new int[2][];
         static List<Enemy> enemies;
         public bool gameOver = false;
         private char[,] fullMapArray;
@@ -36,11 +34,6 @@ namespace SlutprojektP2
         {
             map = new Map();
             player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
-            player.LastPos = player.Pos;
-            player.CurrentPos = player.Pos;
-            //EnqueuePos(player.LastPos, 0);
-            //EnqueuePos(player.Pos, 1);
-            //player.LastPos = player.Pos;
             Weapon.Sword(player);
             Console.CursorVisible = false;
             DrawMap();
@@ -69,8 +62,6 @@ namespace SlutprojektP2
                     }
 
                     // spelet händer här
-                    messages.Enqueue(string.Format("CurrentPos: {0}x, {1}y     ", player.CurrentPos[0], player.CurrentPos[1]));
-                    messages.Enqueue(string.Format("LastPos:    {0}x, {1}y     ", player.LastPos[0], player.LastPos[1]));
 
                     Encounter();
                     DrawCharacters();
@@ -78,18 +69,7 @@ namespace SlutprojektP2
                     //
                 }
 
-                //EnqueuePos(player.Pos, 0);
-                //player.LastPos = comparePositions[0];
-                ////messages.Enqueue("Last " + comparePositions[0][0] + ", " + comparePositions[0][1]);
-
-                player.LastPos = player.CurrentPos;
-
                 player.PlayerController(MapAsArray);
-
-                player.CurrentPos = player.Pos;
-
-                //EnqueuePos(player.Pos, 1);
-                ////messages.Enqueue("Current " + comparePositions[1][0] + ", " + comparePositions[1][1]);
 
                 if (player.HP <= 0)
                 {
@@ -98,68 +78,17 @@ namespace SlutprojektP2
             }
         }
 
-        void EnqueuePos(int[] pos, int index)
-        {
-            comparePositions[index] = pos;
-            //messages.Enqueue(comparePositions[index][0] + ", " + comparePositions[index][1]);
 
-            //if (oddOrEven == true)
-            //{
-            //    playerPositions[0] = player.Pos;
-            //}
-            //else if (oddOrEven == false)
-            //{
-            //    playerPositions[1] = player.Pos;
-            //}
-
-            //playerPositions.Enqueue(pos);
-
-            //if (playerPositions.Count > 2)
-            //{
-            //    playerPositions.Dequeue();
-            //}
-
-            //for (int i = 0; i < playerPositions.Count; i++)
-            //{
-            //    comparePositions[i] = playerPositions.Dequeue();
-            //}
-
-            //for (int i = 0; i < comparePositions.Length; i++)
-            //{
-            //    playerPositions.Enqueue(comparePositions[i]);
-            //}
-
-            //foreach (var pos in playerPositions)
-            //{
-            //    oddOrEven = !oddOrEven;
-
-            //    if (oddOrEven)
-            //    {
-            //        comparePositions[0] = pos;
-            //    }
-            //    else
-            //    {
-            //        comparePositions[1] = pos;
-            //    }
-            //}
-        }
 
         void Encounter()
         {
-            if (player.CurrentPos != player.LastPos)
+            if (gen.Next(100) < 7)
             {
-                if (gen.Next(100) < 7)
-                {
-                    messages.Enqueue("You encountered an enemy!      ");
-                    DrawDisplay();
-                    Thread.Sleep(2000);
-                    Battle newBattle = new Battle(player, enemies[gen.Next(2)]);
-                    Resume();
-                }
-            }
-            else
-            {
-                messages.Enqueue("f");
+                messages.Enqueue("You encountered an enemy!      ");
+                DrawDisplay();
+                Thread.Sleep(2000);
+                Battle newBattle = new Battle(player, enemies[gen.Next(2)]);
+                Resume();
             }
         }
 

@@ -28,25 +28,11 @@ namespace SlutprojektP2
         protected bool[] directions;
         protected char[] collidableTiles;
         protected int[] position = new int[2];
-        protected int[] lastPosition = new int[2];
-        protected int[] currentPosition = new int[2];
 
         public int[] Pos  // property
         {
             get { return position; }   // get method
             set { position = value; }   // set method
-        }
-
-        public int[] LastPos  // property
-        {
-            get { return lastPosition; }   // get method
-            set { lastPosition = value; }   // set method
-        }
-
-        public int[] CurrentPos  // property
-        {
-            get { return currentPosition; }   // get method
-            set { currentPosition = value; }   // set method
         }
 
         public int XpToLevelUp  // property
