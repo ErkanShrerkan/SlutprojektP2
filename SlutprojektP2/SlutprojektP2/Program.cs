@@ -10,7 +10,7 @@ namespace SlutprojektP2
     {
         static void Main(string[] args)
         {
-            Game newGame = new Game();
+            Game newGame = new Game(); // startar spelet
         }
     }
 }

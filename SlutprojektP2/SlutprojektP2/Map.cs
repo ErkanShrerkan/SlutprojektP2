@@ -12,7 +12,7 @@ namespace SlutprojektP2
         public int height = 32;
         public int width = 128;
 
-        public Map()
+        public Map() // eftersom att level bara är text skulle jag kunna göra textfiler med olika levels för att läsa av 
         {
             level += @".....###########################....#########################....##################.............................................";
             level += @"######.........................######.......................######................#.....######################################..";

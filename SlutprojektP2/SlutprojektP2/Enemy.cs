@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SlutprojektP2
 {
-    class Enemy : Character
+    class Enemy : Character // Enemy existerar bara för att dela in fiender i en hög medans de är characters
     {
         
     }

@@ -8,16 +8,13 @@ namespace SlutprojektP2
 {
     abstract class Character
     {
-        protected bool collision;
-        protected int layer;
-        protected string sprite;
+        // alla variabler är protected för att varje character ska ha dem
         protected string name;
         protected int maxHp;
         protected int hp;
         protected int xpToLevelUp;
         protected int currentXp;
         protected int armor;
-        protected int damage;
         protected int dodgeChance;
         protected Weapon currentWeapon;
         protected int level;
@@ -35,22 +32,22 @@ namespace SlutprojektP2
             set { position = value; }   // set method
         }
 
-        public int XpToLevelUp  // property
+        public int XpToLevelUp  
         {
-            get { return xpToLevelUp; }   // get method
-            set { xpToLevelUp = value; }   // set method
+            get { return xpToLevelUp; }   
+            set { xpToLevelUp = value; }  
         }
 
-        public int CurrentXp  // property
+        public int CurrentXp 
         {
-            get { return currentXp; }   // get method
-            set { currentXp = value; }   // set method
+            get { return currentXp; }  
+            set { currentXp = value; } 
         }
 
-        public int HP  // property
+        public int HP
         {
-            get { return hp; }   // get method
-            set { hp = value; }   // set method
+            get { return hp; }
+            set { hp = value; }
         }
 
         public int Level
@@ -59,9 +56,9 @@ namespace SlutprojektP2
             set {level = value; }
         }
 
-        public int MaxHP  // property
+        public int MaxHP
         {
-            get { return maxHp; } // get method
+            get { return maxHp; }
             set { maxHp = value; }
         }
 
@@ -85,13 +82,13 @@ namespace SlutprojektP2
 
         public string Name
         {
-            get { return name; }   // get method
-            set { name = value; }   // set method
+            get { return name; }  
+            set { name = value; }  
         }
 
         // just nu använder bara player denna metod för att levla upp
-        public void LevelUp(Character c) // skulle kunna göras virtual för att kunna ändras för olika sorters karaktärer
-        {
+        public void LevelUp(Character c) // skulle nog kunna göras virtual för att kunna ändras för olika sorters karaktärer
+        {//                  ^ polymorfism :)
             c.Level++;
             c.currentXp = 0;
             c.XpToLevelUp = 10 + (5 * c.Level);
@@ -100,9 +97,9 @@ namespace SlutprojektP2
             Game.messages.Enqueue("Level Up!");
         }
 
-        public void Attack(Character attacker, Character opponent)
-        {
-            if (Game.gen.Next(101) >= (opponent.dodgeChance))
+        public void Attack(Character attacker, Character opponent) // simpel attackmetod
+        {//                  ^   polymorfism :)   ^
+            if (Game.gen.Next(100) > (opponent.dodgeChance))
             {
                 //hit
                 if ((currentWeapon.Damage - opponent.armor / 2) <= 0)

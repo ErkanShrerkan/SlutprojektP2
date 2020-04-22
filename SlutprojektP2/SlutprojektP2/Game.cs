@@ -10,102 +10,115 @@ namespace SlutprojektP2
 {
     class Game
     {
-        int displayStartPosY;
+        int displayStartPosY; // används för att flytta cursorn 
         public static Random gen; // en random generator för hela spelet
         Map map;
-        Player player; // inte Character player; för att bara player behöver en controller
-        public static bool isPaused = false;
-        public static bool isResumed = true;
-        public static Queue<string> messages = new Queue<string>();
-        Queue<int[]> playerPositions = new Queue<int[]>();
-        List<Character> characters = new List<Character>();
-        static List<Enemy> enemies;
-        public bool gameOver = false;
-        private char[,] fullMapArray;
+        public static Player player;
+        public static bool isPaused = false; // används för att hålla koll på vilken state spelet är i
+        public static bool isResumed = true; // ^
+        public static bool canRollForEncounter = false; // bestämmer om spelaren kan slumpa ett battle
+        public static Queue<string> messages = new Queue<string>(); // queue för att lätt ta bort det äldsta meddelandet
+        List<Character> characters = new List<Character>(); // list för att det inte är förbestämt hur många characters det ska finnas
+        static List<Enemy> enemies; // just nu skulle denna lika gärna vara en array eftersom att den inte förändras i längd
+        public bool gameOver = false; 
 
         public Game()
         {
             gen = new Random();
-            Start();
-            Update();
+            Start(); // initierar spelet
+            Update(); // startar game loopen
         }
 
         void Start() // initianerar spelet och ställer in startvärden
         {
+            // här skulle jag också vilja sätta konsollens storlek av buffer, bredd, typsnitt med mera
             map = new Map();
             player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
-            Weapon.Sword(player);
-            Console.CursorVisible = false;
-            DrawMap();
-            DrawDisplay();
-            characters.Add(player);
+            Weapon.Sword(player); // armerar spelaren med ett svärd
+            Console.CursorVisible = false; // gör cursorn osynlig så att man inte ser den flyttas runt hela tiden
+            DrawMap(); // ritar kartan
+            DrawDisplay(); // skriver ut alla meddelanden i queuen
+            characters.Add(player); // sätter spelaren i characterlistan för senare rendering
         }
 
         void Update()
         {
-            while (!gameOver)
+            while (!gameOver) // kör så länge spelets krav för game over inte stämmer
             {
                 enemies = new List<Enemy>() { new Archer(player), new Warrior(player) }; // varje game loop förnyas fienderna för att de ska levla ikapp spelaren samt fylla på hp
-                if (isPaused)
+                if (isPaused) // om pausknappen trycks...
                 {
-                    if (isResumed)
+                    if (isResumed) // ...och spelet inte redan är pausat...
                     {
-                        Pause();
-                        DrawPauseMenu();
+                        Pause(); // ...så pausas spelet
                     }
                 }
-                else if (!isPaused)
+                else if (!isPaused) // om pausknappen trycks...
                 {
-                    if (!isResumed)
-                    {
-                        Resume();
+                    if (!isResumed) // ...och spelet redan är pausat...
+                    { 
+                        Resume(); // ...så återgår spelet
                     }
 
-                    // spelet händer här
-
-                    Encounter();
-                    DrawCharacters();
-                    DrawDisplay();
+                    //
+                    DrawCharacters(); // ritar ut alla karaktärer på sina koordinater
+                    DrawDisplay(); // displayen i det här spelet är meddelanderutan och dess innehåll
                     //
                 }
 
-                player.PlayerController(MapAsArray);
+                player.PlayerController(MapAsArray); // tar en input varje loop
 
-                if (player.HP <= 0)
+                // för debugging och demonstration av meddelandesystemet
+                if (canRollForEncounter)
+                {
+                    messages.Enqueue("true                   "); // för true
+                }
+                else
+                { 
+                    messages.Enqueue("false                  ");
+                }
+                //
+
+                if (canRollForEncounter) // om spelaren rört sig...
+                {
+                    Encounter(); // ...slumpar det om spelaren ska slåss mot en fiende
+                    canRollForEncounter = false;
+                }
+
+                if (player.HP <= 0) // om spelarens hp är <=0 är spelet över
                 {
                     gameOver = true;
                 }
             }
         }
 
-
-
         void Encounter()
         {
-            if (gen.Next(100) < 7)
+            if (gen.Next(100) < 7) // 7% chans att möta en fiende varje loop
             {
-                messages.Enqueue("You encountered an enemy!      ");
-                DrawDisplay();
-                Thread.Sleep(2000);
-                Battle newBattle = new Battle(player, enemies[gen.Next(2)]);
-                Resume();
+                messages.Enqueue("You encountered an enemy!      "); // lägger till ett meddelande i queuen
+                DrawDisplay(); // skriver utt det meddelandet
+                Thread.Sleep(2000); // ger spelaren tid att läsa meddelandet
+                Battle newBattle = new Battle(player, enemies[gen.Next(enemies.Count)]); // ett battle startas med spelaren och en slumpad fiende
+                Resume(); // efter varje battle återgår spelet till att visa kartan med meddelandena
             }
         }
 
         void Resume()
         {
-            Console.Clear();
-            DrawMap();
-            DrawCharacters();
-            isResumed = true;
-            isPaused = false;
+            Console.Clear(); // raderar allt på skärmen
+            DrawMap(); // ritar kartan
+            DrawCharacters(); // ritar karaktärerna
+            isResumed = true; // spelet återgår
+            isPaused = false; // ^
         }
 
         void Pause()
         {
-            Console.Clear();
-            isPaused = true;
-            isResumed = false;
+            Console.Clear(); // raderar allt på skärmen
+            DrawPauseMenu(); // just nu är denna tom men skulle kunna skriva ut en meny
+            isPaused = true; // pausar spelet
+            isResumed = false; // ^
         }
 
         void DrawPauseMenu()
@@ -115,12 +128,11 @@ namespace SlutprojektP2
 
         void DrawMap()
         {
-            Console.SetCursorPosition(0, 0);
-            for (int y = 0; y < 32; y++) // kollar varje koordinat i kartan
+            Console.SetCursorPosition(0, 0); // sätter cursorn i övre vänstra hörnet
+            for (int y = 0; y < 32; y++) // kollar varje y-koordinat i kartan
             {
-                for (int x = 0; x < 128; x++)
+                for (int x = 0; x < 128; x++) // kollar varje x-koordinat i kartan
                 {
-                    //Console.SetCursorPosition(x, y);
                     ColorMap(MapAsArray, x, y, "init"); // färglägger tilen enligt dess markör
                 }
             }
@@ -129,39 +141,41 @@ namespace SlutprojektP2
 
         void DrawDisplay() // skriver ut i meddelanderutan
         {
-            displayStartPosY = 28 - messages.Count;
-
-            if (messages.Count > 13)
+            if (messages.Count > 14) // om fler än 14 meddelanden queueats...
             {
-                for (int i = messages.Count; i > 12; i--)
+                // (negativ for loop för att den räknar ner till 13 från en större siffra)
+                for (int i = messages.Count; i > 14; i--) // ...ska meddelanden dequeueas tills det inte finns fler än 13 kvar
                 {
                     messages.Dequeue();
                 }
             }
 
-            foreach (var message in messages)
+            displayStartPosY = 28 - messages.Count;
+
+            foreach (var message in messages) // varje meddelande i queuen
             {
-                displayStartPosY++;
-                Console.SetCursorPosition(6, displayStartPosY);
+                displayStartPosY++; // ett större värde på y gör att koordinaten hamnar längre ner på skärmen
+                Console.SetCursorPosition(6, displayStartPosY); // alla meddelanden skrivs därför uppifrån och ner
                 Console.WriteLine(message);
             }
         }
 
         void DrawCharacters() // Ritar ut alla karaktärer, just nu finns bara en karaktär, spelaren
         {
-            for (int i = 0; i < characters.Count; i++)
+            for (int i = 0; i < characters.Count; i++) // ifall fler spelare implementeras fungerar denna metod fortfarande
             {
-                characters[i].Pos[0] = CheckValidPosition(characters[i].Pos[0], "x");
-                characters[i].Pos[1] = CheckValidPosition(characters[i].Pos[1], "y");
+                // en ogiltig koordinat kraschar spelet
+                //characters[i].Pos[0] = CheckValidPosition(characters[i].Pos[0], "x"); // kollar om spelarens x koordinat är inom buffern
+                //characters[i].Pos[1] = CheckValidPosition(characters[i].Pos[1], "y"); // kollar om spelarens y koordinat är inom buffern
 
-                Console.SetCursorPosition(characters[i].Pos[0], characters[i].Pos[1]);
+                Console.SetCursorPosition(characters[i].Pos[0], characters[i].Pos[1]); // sätter cursorn på spelarens koordinat
 
                 if (characters[i].Name == "Player") // spelarens karaktär är röd
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.Write(" ");
                 }
-                else // alla andra karaktärer är gula (finns inga ännu)
+                else // alla andra karaktärer är gula, fiender till exempel (slumpas just nu men detta är i förebyggande syfte)
                 {
                     Console.BackgroundColor = ConsoleColor.Yellow;
                     Console.Write(" ");
@@ -199,29 +213,32 @@ namespace SlutprojektP2
             else return 0;
         }
 
-        char[,] MapAsArray // lägger kartans symboler i en tvådimensionell array
+        char[,] MapAsArray // är en property för att det kändes lättare att förstå då
         {
+            // om map.level ändras i framtiden (ie spelaren klarar av den nuvarande) behövs ingen kod ändras i denna property
             get
             {
-                char[] mapArray = map.level.ToCharArray();
+                char[] mapArray = map.level.ToCharArray();  // lägger kartans symboler i en array
 
-                fullMapArray = new char[map.width, map.height];
+                char[,] fullMapArray = new char[map.width, map.height]; ; // denna array kommer innehålla alla chars från mapArray fast tvådimensionellt vilket gör det lättare att hålla reda på
 
-                for (int y = 0; y < map.height; y++)
+                for (int y = 0; y < map.height; y++) // kollar kombinationer av x- och y-koordinater
                 {
-                    for (int x = 0; x < map.width; x++)
+                    for (int x = 0; x < map.width; x++) // ^
                     {
-                        fullMapArray[x, y] = mapArray[(128 * y) + x];
+                        // fullMapArray är tom och fylls på en koordinat i taget med nästa värde i mapArray
+                        fullMapArray[x, y] = mapArray[(map.width * y) + x]; // eftersom att mapArray är endimensionell används [(map.width * y) + x] för att veta vilken del av arrayen som lagras
                     }
                 }
 
-                return fullMapArray;
+                return fullMapArray; // den tvådimensionella arrayen returneras
             }
         }
 
         public static void ColorMap(char[,] tiles, int x, int y, string state)
-        {
-            if (state == "update")
+        {// måste vara public static för att inte krascha
+
+            if (state == "update") // update betyder att det är spelarens position som markeras för målning
             {
                 Console.SetCursorPosition(x, y);
             }
@@ -253,7 +270,7 @@ namespace SlutprojektP2
 
         static void CaseIf(int x, int y, string state) // denna används för att skriva ut ett mellanslag på alla rutor utom den första 
         {
-            if (x == 0 && y == 0 && state == "init")
+            if (x == 0 && y == 0 && state == "init") // init betyder att det är när kartan ritas
             {
 
             }
