@@ -97,11 +97,13 @@ namespace SlutprojektP2
             Game.messages.Enqueue("Level Up!");
         }
 
-        public void Attack(Character attacker, Character opponent) // simpel attackmetod
+        public void Attack(Character opponent) // simpel attackmetod
         {//                  ^   polymorfism :)   ^
             if (Game.gen.Next(100) > (opponent.dodgeChance))
             {
                 //hit
+                Console.ForegroundColor = ConsoleColor.Green;
+
                 if ((currentWeapon.Damage - opponent.armor / 2) <= 0)
                 {
                     opponent.hp -= 1;
@@ -116,8 +118,11 @@ namespace SlutprojektP2
             else
             {
                 // miss
-                Console.WriteLine("{0} missed!\n", attacker.Name);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("{0} missed!\n", Name);
             }
+
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

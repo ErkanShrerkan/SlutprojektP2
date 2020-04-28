@@ -18,7 +18,7 @@ namespace SlutprojektP2
             currentXp = 0;
             MaxHP = 10 + (3 * Level);
             hp = MaxHP;
-            DodgeChance = 20;
+            DodgeChance = 30;
             Armor = 2;
         }
 

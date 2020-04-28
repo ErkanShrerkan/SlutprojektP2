@@ -36,6 +36,7 @@ namespace SlutprojektP2
             player = new Player() { Pos = new int[2] { 8, 2 } }; // player start position
             Weapon.Sword(player); // armerar spelaren med ett svärd
             Console.CursorVisible = false; // gör cursorn osynlig så att man inte ser den flyttas runt hela tiden
+            Console.ForegroundColor = ConsoleColor.Gray;
             DrawMap(); // ritar kartan
             DrawDisplay(); // skriver ut alla meddelanden i queuen
             characters.Add(player); // sätter spelaren i characterlistan för senare rendering
@@ -71,11 +72,11 @@ namespace SlutprojektP2
                 // för debugging och demonstration av meddelandesystemet
                 if (canRollForEncounter)
                 {
-                    messages.Enqueue("true                   "); // för true
+                    messages.Enqueue("true                     "); // för true
                 }
                 else
                 { 
-                    messages.Enqueue("false                  ");
+                    messages.Enqueue("false                    ");
                 }
                 //
 

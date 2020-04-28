@@ -36,17 +36,20 @@ namespace SlutprojektP2
                     Console.WriteLine("{0}'s turn!", c.Name);
                     Console.WriteLine("\n{0}'s stats:\nHP: {1} \nDodge Chance: {2}%\nArmor: {3}", c.Name, c.HP, c.DodgeChance, c.Armor);
                     Console.WriteLine("\nWeapon stats: \nType: {0} \nDamage: {1}", c.CurrentWeapon.Type, c.CurrentWeapon.Damage);
-                    Console.WriteLine("\nPress [ENTER] to continue");
-                    Console.ReadLine();
+                    Console.WriteLine();
 
                     if (c.Name == "Player")
                     {
-                        characters[0].Attack(characters[0], characters[1]); // player attackerar enemy
+                        characters[0].Attack(characters[1]); // player attackerar enemy
                     }
                     else
                     {
-                        characters[1].Attack(characters[1], characters[0]); // enemy attackerar player
+                        characters[1].Attack(characters[0]); // enemy attackerar player
                     }
+
+                    Console.WriteLine("Press [ENTER] to continue");
+                    Console.WriteLine("____________________________________________");
+                    Console.ReadLine();
                 }
 
                 if (enemy.HP <= 0 || player.HP <= 0) // om någon är död
