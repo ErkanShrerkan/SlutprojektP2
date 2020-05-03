@@ -221,7 +221,7 @@ namespace SlutprojektP2
             {
                 char[] mapArray = map.level.ToCharArray();  // lägger kartans symboler i en array
 
-                char[,] fullMapArray = new char[map.width, map.height]; ; // denna array kommer innehålla alla chars från mapArray fast tvådimensionellt vilket gör det lättare att hålla reda på
+                char[,] fullMapArray = new char[map.width, map.height]; // denna array kommer innehålla alla chars från mapArray fast tvådimensionellt vilket gör det lättare att hålla reda på
 
                 for (int y = 0; y < map.height; y++) // kollar kombinationer av x- och y-koordinater
                 {
