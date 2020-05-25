@@ -1,0 +1,205 @@
+<Project>
+  <Name>Slutprojekt</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>SlutprojektP2.exe</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Archer</Name>
+        <Access>Internal</Access>
+        <Location left="539" top="993" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Archer(Player player)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Battle</Name>
+        <Access>Internal</Access>
+        <Location left="1114" top="297" />
+        <Size width="215" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private Boolean isOver</Member>
+        <Member type="Constructor">public Battle(Player player, Enemy enemy)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Character</Name>
+        <Access>Internal</Access>
+        <Location left="641" top="28" />
+        <Size width="219" height="570" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected String name</Member>
+        <Member type="Field">protected Int32 maxHp</Member>
+        <Member type="Field">protected Int32 hp</Member>
+        <Member type="Field">protected Int32 xpToLevelUp</Member>
+        <Member type="Field">protected Int32 currentXp</Member>
+        <Member type="Field">protected Int32 armor</Member>
+        <Member type="Field">protected Int32 dodgeChance</Member>
+        <Member type="Field">protected Weapon currentWeapon</Member>
+        <Member type="Field">protected Int32 level</Member>
+        <Member type="Field">protected Boolean up</Member>
+        <Member type="Field">protected Boolean down</Member>
+        <Member type="Field">protected Boolean left</Member>
+        <Member type="Field">protected Boolean right</Member>
+        <Member type="Field">protected Boolean[] directions</Member>
+        <Member type="Field">protected Char[] collidableTiles</Member>
+        <Member type="Field">protected Int32[] position</Member>
+        <Member type="Property">public Int32[] Pos { get; set; }</Member>
+        <Member type="Property">public Int32 XpToLevelUp { get; set; }</Member>
+        <Member type="Property">public Int32 CurrentXp { get; set; }</Member>
+        <Member type="Property">public Int32 HP { get; set; }</Member>
+        <Member type="Property">public Int32 Level { get; set; }</Member>
+        <Member type="Property">public Int32 MaxHP { get; set; }</Member>
+        <Member type="Property">public Weapon CurrentWeapon { get; set; }</Member>
+        <Member type="Property">public Int32 DodgeChance { get; set; }</Member>
+        <Member type="Property">public Int32 Armor { get; set; }</Member>
+        <Member type="Property">public String Name { get; set; }</Member>
+        <Member type="Constructor">protected Character()</Member>
+        <Member type="Method">public Void LevelUp(Character c)</Member>
+        <Member type="Method">public Void Attack(Character opponent)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Enemy</Name>
+        <Access>Internal</Access>
+        <Location left="412" top="673" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Enemy()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Game</Name>
+        <Access>Internal</Access>
+        <Location left="287" top="28" />
+        <Size width="337" height="536" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private Int32 displayStartPosY</Member>
+        <Member type="Field">private Map map</Member>
+        <Member type="Field">private List&lt;Character&gt; characters</Member>
+        <Member type="Field">public Boolean gameOver</Member>
+        <Member type="Field">public static Random gen</Member>
+        <Member type="Field">public static Player player</Member>
+        <Member type="Field">public static Boolean isPaused</Member>
+        <Member type="Field">public static Boolean isResumed</Member>
+        <Member type="Field">public static Boolean canRollForEncounter</Member>
+        <Member type="Field">public static Queue&lt;String&gt; messages</Member>
+        <Member type="Field">private static Stack&lt;String&gt; stackOfString</Member>
+        <Member type="Field">private static List&lt;Enemy&gt; enemies</Member>
+        <Member type="Property">private Char[,] MapAsArray { get; }</Member>
+        <Member type="Constructor">public Game()</Member>
+        <Member type="Constructor">static Game()</Member>
+        <Member type="Method">private Void Start()</Member>
+        <Member type="Method">private Void Update()</Member>
+        <Member type="Method">private Void Encounter()</Member>
+        <Member type="Method">private Void Resume()</Member>
+        <Member type="Method">private Void Pause()</Member>
+        <Member type="Method">private Void DrawPauseMenu()</Member>
+        <Member type="Method">private Void DrawMap()</Member>
+        <Member type="Method">private Void DrawDisplay()</Member>
+        <Member type="Method">private Void DrawCharacters()</Member>
+        <Member type="Method">private Int32 CheckValidPosition(Int32 i, String axis)</Member>
+        <Member type="Method">public static Void ColorMap(Char[,] tiles, Int32 x, Int32 y, String state)</Member>
+        <Member type="Method">private static Void CaseIf(Int32 x, Int32 y, String state)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Item</Name>
+        <Access>Internal</Access>
+        <Location left="900" top="28" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Item()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Map</Name>
+        <Access>Internal</Access>
+        <Location left="1102" top="28" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public String level</Member>
+        <Member type="Field">public Int32 height</Member>
+        <Member type="Field">public Int32 width</Member>
+        <Member type="Constructor">public Map()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Internal</Access>
+        <Location left="868" top="673" />
+        <Size width="309" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Player()</Member>
+        <Member type="Method">private Boolean[] CheckValidDirections(Char[,] tiles)</Member>
+        <Member type="Method">private Void Move(Int32 direction, Int32 axis, Char[,] tiles)</Member>
+        <Member type="Method">public Void PlayerController(Char[,] tiles)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Warrior</Name>
+        <Access>Internal</Access>
+        <Location left="287" top="993" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Warrior(Player player)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Weapon</Name>
+        <Access>Internal</Access>
+        <Location left="900" top="297" />
+        <Size width="177" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected Int32 damage</Member>
+        <Member type="Field">protected String type</Member>
+        <Member type="Property">public Int32 Damage { get; private set; }</Member>
+        <Member type="Property">public String Type { get; set; }</Member>
+        <Member type="Constructor">public Weapon()</Member>
+        <Member type="Method">public static Void Bow(Character c)</Member>
+        <Member type="Method">public static Void Sword(Character c)</Member>
+        <Member type="Method">public static Void Mace(Character c)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="0" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>494</X>
+          <Y>646</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>742</X>
+          <Y>630</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="8" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="9" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1018</X>
+          <Y>642</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>742</X>
+          <Y>635</Y>
+        </BendPoint>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
